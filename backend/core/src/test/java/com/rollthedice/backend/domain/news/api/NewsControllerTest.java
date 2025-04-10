@@ -1,9 +1,7 @@
 package com.rollthedice.backend.domain.news.api;
 
 import com.rollthedice.backend.domain.news.exception.NewsNotFoundException;
-import com.rollthedice.backend.domain.news.repository.NewsRepository;
 import com.rollthedice.backend.domain.news.service.NewsService;
-import com.rollthedice.backend.domain.readNews.service.ReadNewsService;
 import com.rollthedice.backend.global.BaseControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

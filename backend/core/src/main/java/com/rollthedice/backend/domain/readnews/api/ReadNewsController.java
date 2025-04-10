@@ -1,7 +1,7 @@
-package com.rollthedice.backend.domain.readNews.api;
+package com.rollthedice.backend.domain.readnews.api;
 
 import com.rollthedice.backend.domain.news.dto.response.ReadNewsResponse;
-import com.rollthedice.backend.domain.readNews.service.ReadNewsService;
+import com.rollthedice.backend.domain.readnews.service.ReadNewsService;
 import com.rollthedice.backend.global.common.response.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

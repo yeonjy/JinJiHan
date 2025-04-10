@@ -1,8 +1,8 @@
-package com.rollthedice.backend.domain.readNews.service;
+package com.rollthedice.backend.domain.readnews.service;
 
 import com.rollthedice.backend.domain.member.entity.Member;
 import com.rollthedice.backend.domain.news.dto.response.ReadNewsResponse;
-import com.rollthedice.backend.domain.readNews.entity.ReadNews;
+import com.rollthedice.backend.domain.readnews.entity.ReadNews;
 import com.rollthedice.backend.domain.news.repository.ReadNewsRepository;
 import com.rollthedice.backend.domain.news.service.NewsService;
 import com.rollthedice.backend.global.oauth2.service.AuthService;

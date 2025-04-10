@@ -1,8 +1,8 @@
-package com.rollthedice.backend.domain.readNews;
+package com.rollthedice.backend.domain.readnews;
 
 import com.rollthedice.backend.domain.member.entity.Member;
 import com.rollthedice.backend.domain.news.dto.response.ReadNewsResponse;
-import com.rollthedice.backend.domain.readNews.entity.ReadNews;
+import com.rollthedice.backend.domain.readnews.entity.ReadNews;
 
 import static com.rollthedice.backend.domain.news.NewsFixture.NEWS;
 

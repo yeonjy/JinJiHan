@@ -1,4 +1,4 @@
-package com.rollthedice.backend.domain.readNews.api;
+package com.rollthedice.backend.domain.readnews.api;
 
 import com.rollthedice.backend.domain.news.dto.response.ReadNewsResponse;
 import com.rollthedice.backend.global.common.response.SuccessResponse;

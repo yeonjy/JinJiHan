@@ -1,4 +1,4 @@
-package com.rollthedice.backend.domain.readNews.entity;
+package com.rollthedice.backend.domain.readnews.entity;
 
 import com.rollthedice.backend.domain.member.entity.Member;
 import com.rollthedice.backend.domain.news.entity.News;
