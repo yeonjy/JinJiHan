@@ -1,14 +1,13 @@
-package com.rollthedice.backend.batch;
+package com.rollthedice.backend.domain.news.batch;
 
-import com.rollthedice.backend.batch.newsContentStep.PreSummarizedNewsDto;
-import com.rollthedice.backend.batch.newsContentStep.UncrawledNewsContentReader;
-import com.rollthedice.backend.batch.newsUrlStep.InitNewsDto;
-import com.rollthedice.backend.batch.newsUrlStep.NewsUrlReader;
+import com.rollthedice.backend.domain.news.batch.newsContentStep.PreSummarizedNewsDto;
+import com.rollthedice.backend.domain.news.batch.newsContentStep.UncrawledNewsContentReader;
+import com.rollthedice.backend.domain.news.batch.newsUrlStep.InitNewsDto;
+import com.rollthedice.backend.domain.news.batch.newsUrlStep.NewsUrlReader;
 import com.rollthedice.backend.domain.news.contentqueue.ContentProducer;
 import com.rollthedice.backend.domain.news.dto.ContentMessageDto;
 import com.rollthedice.backend.domain.news.repository.NewsRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobScope;

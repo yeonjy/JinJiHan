@@ -1,4 +1,4 @@
-package com.rollthedice.backend.batch.newsUrlStep;
+package com.rollthedice.backend.domain.news.batch.newsUrlStep;
 
 import com.rollthedice.backend.domain.news.entity.NewsCategory;
 import org.jsoup.Jsoup;

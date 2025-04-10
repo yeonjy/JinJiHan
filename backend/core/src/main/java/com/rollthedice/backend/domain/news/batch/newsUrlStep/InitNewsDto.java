@@ -1,4 +1,4 @@
-package com.rollthedice.backend.batch.newsUrlStep;
+package com.rollthedice.backend.domain.news.batch.newsUrlStep;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

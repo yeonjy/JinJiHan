@@ -1,4 +1,4 @@
-package com.rollthedice.backend.batch.newsContentStep;
+package com.rollthedice.backend.domain.news.batch.newsContentStep;
 
 import lombok.*;
 
