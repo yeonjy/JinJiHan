@@ -1,9 +1,7 @@
 package com.rollthedice.backend.global.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -13,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@Slf4j
 @Configuration
 public class RabbitMQConfig {
 
@@ -34,6 +33,9 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.store.queue.name}")
     private String storeQueueName;
 
+    @Value("${rabbitmq.store.dlq.queue.name}")
+    private String storeDlqQueueName;
+
     @Value("${rabbitmq.summary.exchange.name}")
     private String summaryExchangeName;
 
@@ -46,14 +48,26 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.store.routing.key}")
     private String storeRoutingKey;
 
+    @Value("${rabbitmq.store.dlq.routing.key}")
+    private String storeDlqRoutingKey;
+
     @Bean
     public Queue summaryQueue() {
-        return new Queue(summaryQueueName);
+        return QueueBuilder.durable(summaryQueueName).build();
     }
 
     @Bean
     public Queue storeQueue() {
-        return new Queue(storeQueueName);
+        return QueueBuilder.durable(storeQueueName)
+                .withArgument("x-dead-letter-exchange", storeExchangeName)
+                .withArgument("x-dead-letter-routing-key", storeDlqRoutingKey)
+                .withArgument("x-message-ttl", 60000)
+                .build();
+    }
+
+    @Bean
+    public Queue storeDeadLetterQueue() {
+        return QueueBuilder.durable(storeDlqQueueName).build();
     }
 
     @Bean
@@ -77,6 +91,11 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Binding storeDeadLetterBinding(Queue storeDeadLetterQueue, DirectExchange storeExchange) {
+        return BindingBuilder.bind(storeDeadLetterQueue).to(storeExchange).with(storeDlqRoutingKey);
+    }
+
+    @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
         connectionFactory.setHost(rabbitmqHost);
@@ -90,6 +109,14 @@ public class RabbitMQConfig {
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());
+        rabbitTemplate.setMandatory(true);
+        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+            if (ack) {
+                log.info("Message successfully delivered to the broker.");
+            } else {
+                log.error("Message delivery failed: {}", cause);
+            }
+        });
         return rabbitTemplate;
     }
 
