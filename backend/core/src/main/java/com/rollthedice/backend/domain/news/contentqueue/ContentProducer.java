@@ -3,6 +3,7 @@ package com.rollthedice.backend.domain.news.contentqueue;
 import com.rollthedice.backend.domain.news.dto.ContentMessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,9 @@ public class ContentProducer {
 
     public void sendMessage(ContentMessageDto messageDto) {
         log.info("publish news content message : {}", messageDto.getId());
-        rabbitTemplate.convertAndSend(exchangeName, routingKey, messageDto);
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, messageDto, message -> {
+            message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+            return message;
+        });
     }
 }
